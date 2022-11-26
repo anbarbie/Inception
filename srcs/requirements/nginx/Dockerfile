@@ -6,7 +6,7 @@ RUN mkdir -p /var/www/html
 COPY ./conf/default.conf /etc/nginx/html.d/default.conf
 
 RUN apk add openssl
-RUN mkdir -p /var/www/ssl
+RUN mkdir -p /etc/nginx/ssl
 RUN openssl req \
 	-new \
 	-newkey rsa:4096 \
@@ -14,9 +14,9 @@ RUN openssl req \
 	-nodes \
 	-x509 \
 	-subj "/C=FT/ST=IDF/L=Paris/O=42/OU=antbarbi/CN=localhost" \
-	-keyout /var/www/ssl/inception.key \
-	-out /var/www/ssl/inception.crt
+	-keyout /etc/nginx/ssl/inception.key \
+	-out /etc/nginx/ssl/inception.crt
 RUN apk add openrc && rc-update add nginx default
 
-EXPOSE 443
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 80 443
+#CMD ["nginx", "-g", "daemon off;"]
