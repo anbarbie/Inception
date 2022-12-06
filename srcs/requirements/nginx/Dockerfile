@@ -1,11 +1,13 @@
-FROM alpine:3.15
+FROM debian:buster
 
-RUN apk update && apk upgrade
-RUN apk add nginx
+RUN apt -y update && apt -y upgrade
+RUN apt -y install nginx 
 RUN mkdir -p /var/www/html
-COPY ./conf/default.conf /etc/nginx/html.d/default.conf
+RUN rm -f /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
+COPY ./conf/default.conf /etc/nginx/sites-available/default.conf
+RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
 
-RUN apk add openssl
+RUN apt -y install openssl
 RUN mkdir -p /etc/nginx/ssl
 RUN openssl req \
 	-new \
@@ -16,7 +18,6 @@ RUN openssl req \
 	-subj "/C=FT/ST=IDF/L=Paris/O=42/OU=antbarbi/CN=localhost" \
 	-keyout /etc/nginx/ssl/inception.key \
 	-out /etc/nginx/ssl/inception.crt
-RUN apk add openrc && rc-update add nginx default
 
 EXPOSE 80 443
 #CMD ["nginx", "-g", "daemon off;"]
