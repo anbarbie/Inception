@@ -1,6 +1,8 @@
 FROM	debian:buster
 
-RUN	apt update && apt install -y mariadb_server
+RUN	apt-get update && apt-get install -y mariadb-server
+COPY	./conf/entrypoint.sh /usr/local/bin/
+COPY	./conf/my.cnf etc/mysql/my.cnf
 
-ENTRYPOINT["./conf/entrypoint.sh"]
+#ENTRYPOINT ["entrypoint.sh"]
 EXPOSE	3306
