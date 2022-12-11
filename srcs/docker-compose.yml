@@ -5,6 +5,8 @@ services:
       context: ./requirements/mariadb
     image: mariadb
     restart: always
+    volumes:
+    networks:
     env_file: .env
     expose: 3306
 
