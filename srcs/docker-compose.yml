@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+    image: mariadb
+    restart: always
+    env_file: .env
+    expose: 3306
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      image: wordpress
+      restart: always
+      env_file: .env
+      expose: 9000
+
+  nginx:
+    build: ./requirements/wordpress
+    image: wordpress
+    restart: always
+    env_file: .env
+    expose: 443

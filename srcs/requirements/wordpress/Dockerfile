@@ -9,3 +9,4 @@ RUN	echo "listen=9000" >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN	service php7.3-fpm start
 
 EXPOSE	9000
+ENTRYPOINT ["/usr/sbin/php-fpm7.3", "-F"]
