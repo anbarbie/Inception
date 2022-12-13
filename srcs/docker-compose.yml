@@ -5,7 +5,7 @@ services:
       context: ./requirements/mariadb
     image: mariadb
     restart: always
-    volumes:
+    volumes: 
     networks:
     env_file: .env
     expose: 3306
@@ -20,7 +20,7 @@ services:
 
   nginx:
     build: ./requirements/wordpress
-    image: wordpress
+    image: nginx
     restart: always
     env_file: .env
     expose: 443
