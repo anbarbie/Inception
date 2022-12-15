@@ -6,21 +6,52 @@ services:
     image: mariadb
     restart: always
     volumes: 
+      - wp_db:/var/lib/mysql
     networks:
+      - wp_db
     env_file: .env
-    expose: 3306
 
   wordpress:
     build:
       context: ./requirements/wordpress
-      image: wordpress
-      restart: always
-      env_file: .env
-      expose: 9000
+    image: wordpress
+    restart: always
+    volumes:
+      - wp-files:/var/www/html
+    networks:
+      - wp_web
+      - wp_db
+    env_file: .env
 
   nginx:
-    build: ./requirements/wordpress
+    build: 
+      context: ./requirements/wordpress
     image: nginx
     restart: always
     env_file: .env
-    expose: 443
+    volumes: 
+      - wp-files:/var/www/html
+    networks: 
+      - wp_web
+    ports: 
+      - "443:443"
+
+networks:
+  wp_db:
+  wp_web:
+
+volumes:
+  wp-files:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/antbarbi/data/wp-files
+
+  wp_db:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/antbarbi/data/db
+
