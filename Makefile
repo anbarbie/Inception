@@ -2,10 +2,10 @@ PS:=$(shell sudo docker ps -aq)
 IMAGES:=$(shell sudo docker images -aq)
 
 up:
-	docker compose ./srcs/. up
+	sudo docker compose -f ./srcs/docker-compose.yml up
 
 down:
-	docker compose ./srcs/. down
+	sudo docker compose -f ./srcs/docker-compose.yml down
 
 mariadb:
 	sudo docker build -t mariadb ./srcs/requirements/mariadb
@@ -24,6 +24,18 @@ endif
 fclean: clean
 ifdef IMAGES
 	@sudo docker rmi $(IMAGES)
+endif
+
+echo:
+ifdef PS
+	@echo $(PS)
+else
+	@echo "No PS"
+endif
+ifdef IMAGES
+	@echo $(IMAGES)
+else
+	@echo "No images"
 endif
 
 prune:
