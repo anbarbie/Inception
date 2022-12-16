@@ -20,4 +20,4 @@ RUN openssl req \
 	-out /etc/nginx/ssl/inception.crt
 
 EXPOSE 443
-#CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
