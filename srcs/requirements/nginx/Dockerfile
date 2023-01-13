@@ -19,5 +19,8 @@ RUN openssl req \
 	-keyout /etc/nginx/ssl/inception.key \
 	-out /etc/nginx/ssl/inception.crt
 
+RUN chmod 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/html
+
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]

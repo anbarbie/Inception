@@ -1,57 +1,64 @@
-version: "3.9"
+version: '3'
 services:
   mariadb:
+    container_name: mariadb
+    networks:
+      - inception
     build:
       context: ./requirements/mariadb
-    image: mariadb
-    restart: always
     volumes: 
-      - wp_db:/var/lib/mysql
-    networks:
-      - wp_db
+      - mariadb:/var/lib/mysql
     env_file: .env
-
-  wordpress:
-    build:
-      context: ./requirements/wordpress
-    image: wordpress
-    restart: always
-    volumes:
-      - wp-files:/var/www/html
-    networks:
-      - wp_web
-      - wp_db
-    env_file: .env
+    restart: unless-stopped
+    expose:
+      - "3306"
 
   nginx:
-    build: 
-      context: ./requirements/wordpress
-    image: nginx
-    restart: always
+    container_name: nginx
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    build:
+      context: requirements/nginx
     env_file: .env
-    volumes: 
-      - wp-files:/var/www/html
-    networks: 
-      - wp_web
-    ports: 
+    ports:
       - "443:443"
+    restart: on-failure
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+    depends_on:
+      - mariadb
+    restart: on-failure
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    env_file: .env
+    depends_on:
+      - mariadb
+    expose:
+      - "9000"
 
 networks:
-  wp_db:
-  wp_web:
+  inception:
+    driver: bridge
 
 volumes:
-  wp-files:
+  wordpress:
     driver: local
     driver_opts:
-      o: bind
       type: none
-      device: /home/antbarbi/data/wp-files
-
-  wp_db:
+      o: bind
+      device: /home/antbarbi/data/wordpress
+  mariadb:
     driver: local
     driver_opts:
-      o: bind
       type: none
-      device: /home/antbarbi/data/db
-
+      o: bind
+      device: /home/antbarbi/data/mariadb

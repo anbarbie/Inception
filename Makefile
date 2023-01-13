@@ -4,6 +4,12 @@ IMAGES:=$(shell sudo docker images -aq)
 up:
 	sudo docker compose -f ./srcs/docker-compose.yml up
 
+upd:	
+	sudo docker compose -f ./srcs/docker-compose.yml up -d
+
+tuto:
+	sudo docker compose -f ./srcs/tutodocker-compose.yml up
+
 down:
 	sudo docker compose -f ./srcs/docker-compose.yml down
 
@@ -14,7 +20,9 @@ nginx:
 	sudo docker build -t nginx ./srcs/requirements/nginx
 
 wordpress:
-	sudo docker build -t wordpress ./src/requirements/wordpress
+	sudo docker build -t wordpress ./srcs/requirements/wordpress
+
+re: fclean up
 
 clean:
 ifdef PS
