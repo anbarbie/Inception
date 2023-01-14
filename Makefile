@@ -22,7 +22,7 @@ nginx:
 wordpress:
 	sudo docker build -t wordpress ./srcs/requirements/wordpress
 
-re: fclean up
+re: fclean prune up
 
 clean:
 ifdef PS
