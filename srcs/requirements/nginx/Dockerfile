@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN apt -y update && apt -y upgrade
 RUN apt -y install nginx 
-RUN mkdir -p /var/www/html
+RUN mkdir -p /var/www/wordpress
 RUN rm -f /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
 COPY ./conf/default.conf /etc/nginx/sites-available/default.conf
 RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
@@ -19,8 +19,8 @@ RUN openssl req \
 	-keyout /etc/nginx/ssl/inception.key \
 	-out /etc/nginx/ssl/inception.crt
 
-RUN chmod 755 /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+RUN chmod 755 /var/www/wordpress
+RUN chown -R www-data:www-data /var/www/wordpress
 
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]

@@ -36,7 +36,7 @@ services:
       - mariadb
     restart: on-failure
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/wordpress
     networks:
       - inception
     env_file: .env
