@@ -4,10 +4,12 @@ RUN	apt-get update && apt-get install -y \
 					php-fpm \
 					php-mysql \
 					wget \
-					mariadb-client 
-RUN	wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
-RUN	cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
-RUN	chown -R root:root /var/www/wordpress
+					mariadb-client
+RUN	mkdir -p /var/www/html
+RUN	wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www/html
+RUN	cd /var/www/html && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
+RUN	chmod 755 /var/www/html
+RUN	chown -R root:root /var/www/html
 RUN	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN	chmod +x wp-cli.phar
 RUN	mv wp-cli.phar /usr/local/bin/wp

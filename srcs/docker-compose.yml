@@ -36,7 +36,7 @@ services:
       - mariadb
     restart: on-failure
     volumes:
-      - wordpress:/var/www/wordpress
+      - wordpress:/var/www/html
     networks:
       - inception
     env_file: .env
@@ -55,7 +55,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/antbarbi/data/wordpress
+      device: /home/antbarbi/data/html
   mariadb:
     driver: local
     driver_opts:
