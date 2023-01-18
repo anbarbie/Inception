@@ -16,7 +16,6 @@ RUN	mv wp-cli.phar /usr/local/bin/wp
 COPY	./wp_config.sh /usr/local/bin/
 RUN	chmod +x /usr/local/bin/wp_config.sh
 
-#RUN	mkdir -p /var/www/html/wordpress
 RUN	echo "listen=9000" >> /etc/php/7.3/fpm/pool.d/www.conf
 
 ENTRYPOINT ["wp_config.sh"]
