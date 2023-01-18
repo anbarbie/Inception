@@ -15,20 +15,15 @@ upe:
 down:
 	sudo docker compose -f ./srcs/docker-compose.yml down
 
-mariadb:
-	sudo docker build -t mariadb ./srcs/requirements/mariadb
+stop:
+	sudo docker compose -f ./srcs/docker-compose.yml stop
 
-nginx:
-	sudo docker build -t nginx ./srcs/requirements/nginx
-
-wordpress:
-	sudo docker build -t wordpress ./srcs/requirements/wordpress
+restart:
+	sudo docker compose -f ./srcs/docker-compose.yml restart
 
 re: clear up
 
-clear: fclean prune
-	sudo rm -rf /home/antbarbi/data/html;
-	sudo rm -rf /home/antbarbi/data/mariadb;
+clear: fclean prune data
 
 clean:
 ifdef PS
