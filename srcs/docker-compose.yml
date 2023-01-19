@@ -10,6 +10,11 @@ services:
       - mariadb:/var/lib/mysql
     env_file: .env
     restart: unless-stopped
+    healthcheck:
+      test: "mysql -uwordpress -pwordpress -e 'SELECT 1;'"
+      interval: 1s
+      timeout: 10s
+      retries: 15
     expose:
       - "3306"
 
@@ -41,7 +46,8 @@ services:
       - inception
     env_file: .env
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     expose:
       - "9000"
 
