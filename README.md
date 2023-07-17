@@ -49,11 +49,3 @@ To clean up the infrastructure and remove the containers and volumes, run:
 ```
 make clean
 ```
-
-Make sure to replace `login` with your actual login name when configuring the domain name.
-
-Please refer to the provided Dockerfiles and configuration files for further details on the setup of each service.
-
-Note: Make sure you have Docker and Docker Compose installed on your system before running the commands.
-
-Enjoy your Docker infrastructure setup!
